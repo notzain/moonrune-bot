@@ -1,6 +1,6 @@
 {
   "google": ["g", "google"],
   "wikipedia": ["w", "wiki", "wikipedia"],
-  "anilist": ["ani", "anilist", "anime"],
-  "jesse": ["jesse"]
+  "anisearch": ["ani", "mal", "anilist", "anime"],
+  "movienight": ["movienight", "movienite", "movie", "mn"]
 }

@@ -3,17 +3,29 @@ const config     = require('../../config/config.json');
 const Discord    = require('discord.js');
 
 const providers = ['kitsu', 'mal', 'myanimelist', 'anilist'];
+const defaultProvider = 'anilist';
 
 module.exports = (message, args) => {
-  let provider = 'anilist';
-  let query = args.slice();
+  let customProvider = false;
+  const provider = (
+    () => {
+      if (providers.includes(args[0])) {
+        customProvider = true;
+        return args[0];
+      }
+      return defaultProvider;
+    }
+  )();
 
-  if (providers.includes(args[0])) {
-    provider = args[0];
-    query = args.slice(1);
-  }
+  const query = (
+    () => {
+      if (customProvider) {
+        return args.slice(1).join(' ');
+      }
+      return args.join(' ');
+    }
+  )();
 
-  query = query.join(' ');
   ani.search(provider, 'anime', query)
     .then(res => {
       const anime = res[0];
