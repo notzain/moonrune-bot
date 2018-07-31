@@ -1,0 +1,6 @@
+{
+  "google": ["g", "google"],
+  "wikipedia": ["w", "wiki", "wikipedia"],
+  "anilist": ["ani", "anilist", "anime"],
+  "jesse": ["jesse"]
+}
