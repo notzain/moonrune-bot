@@ -1,10 +1,7 @@
 const Discord = require('discord.js');
-const JsonDB   = require('node-json-db');
-const fetch = require('node-fetch');
+const fetch   = require('node-fetch');
 
-const config = require('../../config/config.json');
-
-var query = `
+const query = `
 query ($user: String) {
   MediaListCollection(userName: $user, type: ANIME) {
     lists {
@@ -51,7 +48,6 @@ const sortByDate = (entries) => entries.sort((a, b) => {
 const sortByDateReversed = (entries) => sortByDate(entries).reversed()
 
 const commandList = (message, args) => {
-  console.log(args);
   fetch(url, options)
     .then(response => {
       response.json().then(json => {
