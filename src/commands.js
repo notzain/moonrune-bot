@@ -6,7 +6,7 @@ const movienight = require('./commands/movienight');
 
 const commandMap = [
   { command: 'google', fn: google },
-  { command: 'anisearch', fn: anilist },
+  { command: 'anisearch', fn: anisearch },
   { command: 'movienight', fn: movienight },
 ]
 
