@@ -45,7 +45,10 @@ const sortByDate = (entries) => entries.sort((a, b) => {
   return new Date(a.date) - new Date(b.date);
 })
 
-const sortByDateReversed = (entries) => sortByDate(entries).reversed()
+const sortByTitle = (entries) => entries.sort((a, b) => {
+  return a.title.localeCompare(b.title);
+})
+
 
 const commandList = (message, args) => {
   fetch(url, options)
@@ -53,15 +56,15 @@ const commandList = (message, args) => {
       response.json().then(json => {
         if (!response.ok) return;
 
-        const listToFind = json.data.MediaListCollection.lists.find(entry =>
-          entry.name.toLowerCase() == args[0].toLowerCase()
+        const listToFind = json.data.MediaListCollection.lists.filter(entry =>
+          args.find(arg => arg.toLowerCase() === entry.name.toLowerCase())
         );
 
-        const iterableMap = listToFind
-          ? [listToFind]
+        const iterableList = listToFind.length > 0
+          ? listToFind
           : json.data.MediaListCollection.lists;
 
-        const data = iterableMap.map(list => {
+        const data = iterableList.map(list => {
           const entries = list.entries.map(entry => {
             const title = entry.media.title.romaji;
             const score = entry.score;
@@ -85,7 +88,19 @@ const commandList = (message, args) => {
         });
 
         data.forEach(list => {
-          const format = list.entries.map(entry => {
+          let entries = list.entries;
+
+          if (args.includes('--sort=date')) {
+            sortByDate(entries);
+          } else if (args.includes('--sort=title')) {
+            sortByTitle(entries);
+          }
+
+          if (args.includes('--reversed')) {
+            entries = entries.reverse();
+          }
+
+          const format = entries.map(entry => {
             const score = entry.score != 0 ? `, ${entry.score}/10` : '';
             const date = entry.date ? ` (${entry.date.toDateString()})` : '';
 
@@ -104,7 +119,6 @@ const commandList = (message, args) => {
       console.error(error);
     });
 }
-
 
 module.exports = (message, args) => {
   switch (args[0]) {
