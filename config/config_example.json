@@ -1,0 +1,6 @@
+// Examplatory configuration file. Retrieve and add a custom token in the 'token' field from 'https://discordapp.com/developers/applications/'.
+// Save this as 'config.json' in the same file.
+{
+    "token": "token.that.some.random.dude.can't.use.to.get.into.the.server",
+    "prefix": "!"
+}
