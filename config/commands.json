@@ -1,5 +1,6 @@
 {
   "google": ["g", "google"],
+  "imagesearch": ["image", "googleimage", "i"],
   "wikipedia": ["w", "wiki", "wikipedia"],
   "anisearch": ["ani", "mal", "anilist", "anime"],
   "movienight": ["movienight", "movienite", "movie", "mn"]

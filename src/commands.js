@@ -1,13 +1,15 @@
 const commandConfig = require('../config/commands.json');
 
-const google     = require('./commands/google');
-const anisearch  = require('./commands/anisearch');
-const movienight = require('./commands/movienight');
+const google      = require('./commands/google');
+const imagesearch = require('./commands/imagesearch');
+const anisearch   = require('./commands/anisearch');
+const movienight  = require('./commands/movienight');
 
 const commandMap = [
-  { command: 'google', fn: google },
-  { command: 'anisearch', fn: anisearch },
-  { command: 'movienight', fn: movienight },
+  { command: 'anisearch',   fn: anisearch   },
+  { command: 'google',      fn: google      },
+  { command: 'imagesearch', fn: imagesearch },
+  { command: 'movienight',  fn: movienight  },
 ]
 
 module.exports = (command, message, args) => {
