@@ -1,5 +1,7 @@
 # Config
 config/config.json
+config/casino.json
+
 .tern-project
 
 # Logs
