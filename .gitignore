@@ -1,5 +1,6 @@
 # Config
 config/config.json
+.tern-project
 
 # Logs
 logs

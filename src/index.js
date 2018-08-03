@@ -26,11 +26,9 @@ client.on('message', async message => {
 
   if (!handleCommand(command, message, args)) {
     const emoteToFind = sadEmotes[Math.floor(Math.random() * sadEmotes.length)];
-    const emote = client.emojis.find('name', emoteToFind);
+    const emote = client.emojis.find('name', emoteToFind) || '';
 
-    if (emote) {
-      message.channel.send(`I don't recognize command '${command}' ${emote}`);
-    }
+    message.channel.send(`I don't recognize command '${command}'${emote}.`);
   }
 });
 
