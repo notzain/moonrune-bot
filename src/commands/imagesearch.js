@@ -2,8 +2,6 @@ const imagesearch = require('g-i-s');
 
 const findImage = (message, args, options) => {
   const query = args.join(' ');
-  console.log(query);
-  console.log(options);
 
   imagesearch(query, (err, res) => {
     if (err) {
@@ -22,7 +20,6 @@ const findImage = (message, args, options) => {
       ? options.result
       : 0;
 
-    console.log(index);
     message.channel.send(res[index].url);
   });
 }
