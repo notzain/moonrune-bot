@@ -1,5 +1,5 @@
 const getMovieList = require('./getMovieLists');
-const Discord   = require('discord.js');
+const Discord      = require('discord.js');
 
 const sortByDate = (entries) => entries.sort((a, b) => {
   return new Date(a.date) - new Date(b.date);

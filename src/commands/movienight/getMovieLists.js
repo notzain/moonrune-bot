@@ -76,7 +76,7 @@ const getMovies = async (args) => {
         entries: entries,
       };
     });
-  } catch(e){
+  } catch (e) {
     console.error(e);
     return null;
   }
@@ -85,4 +85,4 @@ const getMovies = async (args) => {
 
 module.exports = (args) => {
   return getMovies(args);
-}
+};
