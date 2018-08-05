@@ -5,7 +5,6 @@ module.exports = (message, args) => {
   }
 
   const answer = args[0];
-  console.log(answer);
   if (answer === 'heads' || answer === 'tails') {
     const flip = (Math.floor(Math.random() * 2) == 0) ? 'heads' : 'tails';
     message.channel.send(`Coin landed ${flip}`);
@@ -15,4 +14,4 @@ module.exports = (message, args) => {
     message.channel.send('Heads or tails?');
     return 0;
   }
-}
+};

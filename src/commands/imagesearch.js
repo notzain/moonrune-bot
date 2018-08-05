@@ -22,11 +22,11 @@ const findImage = (message, args, options) => {
 
     message.channel.send(res[index].url);
   });
-}
+};
 
 module.exports = (message, args) => {
   const resultNum = ( () => {
-    const index = args.findIndex(el => el.includes('--result='));
+    const index = args.findIndex((el) => el.includes('--result='));
     if (index === -1) {
       return null;
     }
@@ -37,7 +37,7 @@ module.exports = (message, args) => {
   } )();
 
   const random = ( () => {
-    const random = args.findIndex(el => el.includes('--random'));
+    const random = args.findIndex((el) => el.includes('--random'));
     if (random === -1) {
       return false;
     }
@@ -47,9 +47,9 @@ module.exports = (message, args) => {
 
   const options = {
     result: resultNum,
-    random: random
-  }
+    random: random,
+  };
 
   findImage(message, args, options);
-}
+};
 

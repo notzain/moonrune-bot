@@ -12,12 +12,12 @@ const commandMap = [
   { command: 'google',      fn: google      },
   { command: 'imagesearch', fn: imagesearch },
   { command: 'movienight',  fn: movienight  },
-]
+];
 
 module.exports = (command, message, args) => {
   for (const prop in commandConfig) {
     if (commandConfig[prop].includes(command)) {
-      const cmd = commandMap.find(cmd => cmd.command === prop);
+      const cmd = commandMap.find((cmd) => cmd.command === prop);
       if (cmd) {
         cmd.fn(message, args);
         return true;
@@ -25,4 +25,4 @@ module.exports = (command, message, args) => {
     }
   }
   return false;
-}
+};

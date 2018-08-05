@@ -1,5 +1,5 @@
 const fetch   = require('node-fetch');
-const Discord     = require('discord.js');
+const Discord = require('discord.js');
 
 const query = `
 query ($user: String) {
@@ -25,47 +25,47 @@ query ($user: String) {
 `;
 // Define our query variables and values that will be used in the query request
 const variables = {
-  user: "AviansMovies"
+  user: 'AviansMovies',
 };
 // Define the config we'll need for our Api request
-const url = 'https://graphql.anilist.co',
-    options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-            query: query,
-            variables: variables
-        })
-    };
+const url = 'https://graphql.anilist.co';
+const options = {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  },
+  body: JSON.stringify({
+    query: query,
+    variables: variables,
+  }),
+};
 
 const sortByDate = (entries) => entries.sort((a, b) => {
   return new Date(a.date) - new Date(b.date);
-})
+});
 
 const sortByTitle = (entries) => entries.sort((a, b) => {
   return a.title.localeCompare(b.title);
-})
+});
 
 
 const commandList = (message, args) => {
   fetch(url, options)
-    .then(response => {
-      response.json().then(json => {
+    .then((response) => {
+      response.json().then((json) => {
         if (!response.ok) return;
 
-        const listToFind = json.data.MediaListCollection.lists.filter(entry =>
-          args.find(arg => arg.toLowerCase() === entry.name.toLowerCase())
+        const listToFind = json.data.MediaListCollection.lists.filter((entry) =>
+          args.find((arg) => arg.toLowerCase() === entry.name.toLowerCase())
         );
 
         const iterableList = listToFind.length > 0
           ? listToFind
           : json.data.MediaListCollection.lists;
 
-        const data = iterableList.map(list => {
-          const entries = list.entries.map(entry => {
+        const data = iterableList.map((list) => {
+          const entries = list.entries.map((entry) => {
             const title = entry.media.title.romaji;
             const score = entry.score;
 
@@ -77,17 +77,17 @@ const commandList = (message, args) => {
             return {
               title: title,
               score: score,
-              date: date
-            }
-          })
+              date: date,
+            };
+          });
 
           return {
             name: list.name,
-            entries: entries
-          }
+            entries: entries,
+          };
         });
 
-        data.forEach(list => {
+        data.forEach((list) => {
           let entries = list.entries;
 
           if (args.includes('--sort=date')) {
@@ -100,12 +100,12 @@ const commandList = (message, args) => {
             entries = entries.reverse();
           }
 
-          const format = entries.map(entry => {
+          const format = entries.map((entry) => {
             const score = entry.score != 0 ? `, ${entry.score}/10` : '';
             const date = entry.date ? ` (${entry.date.toDateString()})` : '';
 
             return `${entry.title}${score}${date}`;
-          })
+          });
 
           const embed = new Discord.RichEmbed()
             .setAuthor(list.name)
@@ -113,13 +113,13 @@ const commandList = (message, args) => {
 
           message.channel.send(embed);
         });
-      })
+      });
     })
-    .catch(error => {
+    .catch((error) => {
       console.error(error);
     });
-}
+};
 
 module.exports = (message, args) => {
   commandList(message, args);
-}
+};

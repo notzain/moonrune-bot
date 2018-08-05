@@ -8,10 +8,10 @@ module.exports = (message, args) => {
       return;
     }
 
-    const validLink = result.links.find(link => link.href !== null);
+    const validLink = result.links.find((link) => link.href !== null);
     if (validLink) {
       message.channel.send(validLink.href);
     }
   });
-}
+};
 

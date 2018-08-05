@@ -1,6 +1,5 @@
-const ani        = require('anifetch');
-const config     = require('../../config/config.json');
-const Discord    = require('discord.js');
+const ani     = require('anifetch');
+const Discord = require('discord.js');
 
 const providers = ['kitsu', 'mal', 'myanimelist', 'anilist'];
 const defaultProvider = 'anilist';
@@ -27,22 +26,22 @@ module.exports = (message, args) => {
   )();
 
   ani.search(provider, 'anime', query)
-    .then(res => {
+    .then((res) => {
       const anime = res[0];
 
-      const embed =  new Discord.RichEmbed()
+      const embed = new Discord.RichEmbed()
         .setAuthor(anime.title_canonical)
         .setDescription(anime.synopsis)
         .setImage(anime.cover)
         .setURL(anime.url)
         .addField('Episodes', anime.episodes)
-        .addField('Rating', anime.rating)
+        .addField('Rating', anime.rating);
 
       message.channel.send(embed);
     })
-    .catch(err => {
+    .catch((err) => {
       message.channel.send(`Can't find anime: '${query}'. FeelsBadMan`);
-    })
-}
+    });
+};
 
 
