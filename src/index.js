@@ -11,13 +11,13 @@ const sadEmotes = [
   'illyacry',
   'TheSaddest',
   'kuropatsad',
-]
+];
 
 client.on('ready', async () => {
   console.log(client.user.username);
 });
 
-client.on('message', async message => {
+client.on('message', async (message) => {
   if (message.author.bot) return;
   if (message.content.indexOf(config.prefix) !== 0) return;
 

@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 const providers = ['kitsu', 'mal', 'myanimelist', 'anilist'];
 const defaultProvider = 'anilist';
 
-module.exports = (message, args) => {
+const anisearch = async (message, args) => {
   let customProvider = false;
   const provider = (
     () => {
@@ -40,8 +40,13 @@ module.exports = (message, args) => {
       message.channel.send(embed);
     })
     .catch((err) => {
-      message.channel.send(`Can't find anime: '${query}'. FeelsBadMan`);
+      message.channel.send(
+        `Can't find anime '${query}' in ${provider}. FeelsBadMan`
+      );
     });
 };
 
+module.exports = (message, args) => {
+  anisearch(message, args);
+};
 

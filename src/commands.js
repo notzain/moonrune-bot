@@ -5,6 +5,7 @@ const gamble        = require('./commands/gamble');
 const google        = require('./commands/google');
 const imagesearch   = require('./commands/imagesearch');
 const movienight    = require('./commands/movienight');
+const wikipedia     = require('./commands/wikipedia');
 
 const commandMap = [
   { command: 'anisearch',   fn: anisearch   },
@@ -12,6 +13,7 @@ const commandMap = [
   { command: 'google',      fn: google      },
   { command: 'imagesearch', fn: imagesearch },
   { command: 'movienight',  fn: movienight  },
+  { command: 'wikipedia',   fn: wikipedia   },
 ];
 
 module.exports = (command, message, args) => {
