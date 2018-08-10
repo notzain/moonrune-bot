@@ -35,13 +35,23 @@ class CommandRegistry {
   };
 
   async run(bot, message) {
-    const prefix = message.content[0];
+    const messageAsArray = message.content.trim().split(/ +/g);
+    const rawCommand = messageAsArray.shift();
+
     this.commandGroups.forEach((commandGroup) => {
-      if (commandGroup.prefix === prefix) {
-        commandGroup.runCommand(bot, message, message);
+      const prefix = rawCommand.substring(0, commandGroup.prefix.length);
+      const command = rawCommand.substring(commandGroup.prefix.length);
+
+      if (commandGroup.prefix !== prefix) {
+        return;
       }
+
+      commandGroup.runCommand(bot, message, {
+        commandName: command,
+        commandArgs: messageAsArray,
+      });
     });
-  }
+  };
 };
 
 module.exports = CommandRegistry;

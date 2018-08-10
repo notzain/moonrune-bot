@@ -22,9 +22,12 @@ class CommandGroup {
   };
 
   runCommand(bot, message, args) {
-    return this.commands.some(
-      (command) => command.run(bot, message, args)
-    );
+    return this.commands.some((command) => {
+      if (command.meta.aliases.includes(args.commandName)) {
+        return command.run(bot, message, args.commandArgs);
+      }
+      return false;
+    });
   };
 };
 
