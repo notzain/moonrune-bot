@@ -36,22 +36,24 @@ class BotClient {
   checkRegisterCommands(message) {
     const botId = this.client.user.id;
 
-    if (message.mentions.users.has(botId)) {
-      const serverId = message.guild.id;
-      const messageArray = message.content.trim().split(' ');
+    if (!message.mentions.users.has(botId)) {
+      return;
+    }
 
-      if (messageArray.includes('register')) {
-        if (this.registerServer(serverId)) {
-          message.channel.send(
-            'At your service, Gintoki-sama.'
-          );
-        }
-      } else if (messageArray.includes('unregister')) {
-        if (this.unregisterServer(serverId)) {
-          message.channel.send(
-            'Please call me back when you need my services.'
-          );
-        }
+    const serverId = message.guild.id;
+    const messageArray = message.content.trim().split(' ');
+
+    if (messageArray.includes('register')) {
+      if (this.registerServer(serverId)) {
+        message.channel.send(
+          'At your service, Gintoki-sama.'
+        );
+      }
+    } else if (messageArray.includes('unregister')) {
+      if (this.unregisterServer(serverId)) {
+        message.channel.send(
+          'Please call me back when you need my services.'
+        );
       }
     }
   };
@@ -69,6 +71,7 @@ class BotClient {
       this.checkRegisterCommands(message);
 
       if (this.isRegisteredServer(message.guild.id)) {
+        this.commandRegistry.run(this, message);
         callback(message);
       };
     });

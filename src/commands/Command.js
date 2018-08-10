@@ -4,15 +4,18 @@ class CommandMetadata {
     this.aliases = aliases;
     this.usage = usage;
     this.description = description;
-
-    return this;
   };
 };
 
 class Command {
   constructor(metaData) {
-    this.meta = commandConfig;
+    this.meta = metaData;
   };
+
+  async run(bot, message, args) {
+    console.log(`${this.meta.name} is not not implemented yet.`);
+    return false;
+  }
 };
 
 module.exports = {
