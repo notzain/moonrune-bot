@@ -13,8 +13,7 @@ class Command {
   };
 
   async run(bot, message, args) {
-    console.log(`${this.meta.name} is not not implemented yet.`);
-    return false;
+    throw new Error('Command::run is abstract');
   }
 };
 

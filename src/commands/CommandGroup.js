@@ -1,10 +1,26 @@
+const fuzzy = require('../util/fuzzy');
+
 class CommandGroup {
-  constructor(name, description, prefix) {
+  constructor(name, description, prefix, aliases) {
     this.name = name;
     this.description = description;
     this.prefix = prefix;
+    this.aliases = aliases || [];
+
     this.commands = [];
   };
+
+  help() {
+    const commandHelp = this.commands.forEach((command) =>
+      `${command.name} (${command.aliases} - ${command.usage}
+      ${command.description}`
+    );
+
+    return {
+      title: this.name,
+      commands: commandHelp,
+    };
+  }
 
   registerCommand(command) {
     const hasCommand = this.commands.find(
@@ -21,13 +37,25 @@ class CommandGroup {
     return this;
   };
 
-  runCommand(bot, message, args) {
-    return this.commands.some((command) => {
-      if (command.meta.aliases.includes(args.commandName)) {
-        return command.run(bot, message, args.commandArgs);
+  findCommandFuzzy(query) {
+    return this.commands.find((command) => {
+      const isPossibleCommand = fuzzy(
+        query,
+        command,
+        'meta.aliases',
+      ).length;
+
+      if (isPossibleCommand) {
+        console.log('chosen:');
+        console.log(command);
+        return true;
       }
       return false;
     });
+  };
+
+  runCommand(bot, message, args) {
+    throw new Error('CommandGroup::runCommand is abstract');
   };
 };
 

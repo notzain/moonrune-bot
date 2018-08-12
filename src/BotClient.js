@@ -37,7 +37,7 @@ class BotClient {
     const botId = this.client.user.id;
 
     if (!message.mentions.users.has(botId)) {
-      return;
+      return false;
     }
 
     const serverId = message.guild.id;
@@ -48,12 +48,14 @@ class BotClient {
         message.channel.send(
           'At your service, Gintoki-sama.'
         );
+        return true;
       }
     } else if (messageArray.includes('unregister')) {
       if (this.unregisterServer(serverId)) {
         message.channel.send(
           'Please call me back when you need my services.'
         );
+        return false;
       }
     }
   };
@@ -68,12 +70,19 @@ class BotClient {
 
   onMessage(callback) {
     this.client.on('message', (message) => {
-      this.checkRegisterCommands(message);
+      if (message.author.bot) {
+        return;
+      }
+
+      if (this.checkRegisterCommands(message)) {
+        return;
+      }
 
       if (this.isRegisteredServer(message.guild.id)) {
         this.commandRegistry.run(this, message);
-        callback(message);
       };
+
+      callback(message);
     });
 
     return this;

@@ -1,12 +1,14 @@
+const fuzzy = require('../util/fuzzy');
+
 class CommandRegistry {
   constructor() {
     this.commandGroups = [];
   };
 
   registerCommandGroup(commandGroup) {
-    const hasGroup = this.commandGroups.find((group) => {
-      return group.name === commandGroup.name;
-    });
+    const hasGroup = this.commandGroups.find((group) =>
+      group.name === commandGroup.name
+    );
 
     if (hasGroup) {
       throw new Error(
@@ -19,7 +21,7 @@ class CommandRegistry {
     return this;
   };
 
-  registerCommand(commandGroup, command) {
+  registerCommandInGroup(commandGroup, command) {
     const groupName = commandGroup.name || commandGroup;
     const groupIndex = this.commandGroups.findIndex((group) => {
       return groupName === group.name;
@@ -38,7 +40,7 @@ class CommandRegistry {
     const messageAsArray = message.content.trim().split(/ +/g);
     const rawCommand = messageAsArray.shift();
 
-    this.commandGroups.forEach((commandGroup) => {
+    this.commandGroups.some((commandGroup) => {
       const prefix = rawCommand.substring(0, commandGroup.prefix.length);
       const command = rawCommand.substring(commandGroup.prefix.length);
 
@@ -46,10 +48,19 @@ class CommandRegistry {
         return;
       }
 
-      commandGroup.runCommand(bot, message, {
-        commandName: command,
-        commandArgs: messageAsArray,
-      });
+      const isPossibleCommand = fuzzy(
+        command,
+        [commandGroup.name].concat(commandGroup.aliases)
+      ).length;
+
+      if (isPossibleCommand > 0) {
+        return commandGroup.runCommand(
+          bot,
+          message,
+          messageAsArray
+        );
+      }
+      return false;
     });
   };
 };
