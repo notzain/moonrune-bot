@@ -7,8 +7,40 @@ class BotClient {
     this.client = new DiscordJS.Client();
     this.serverWhitelist = [];
 
-    return this;
+    this.onMessageCallback = null;
+    this.onLoginCallback = null;
+
+    this._setup();
   };
+
+  _registerOnMessage() {
+    this.client.on('message', (message) => {
+      if (message.author.bot) {
+        return;
+      }
+
+      if (this.checkRegisterCommands(message)) {
+        return;
+      }
+
+      if (this.isRegisteredServer(message.guild.id)) {
+        this.commandRegistry.run(this, message);
+      };
+
+      if (this.onMessageCallback) this.onMessageCallback();
+    });
+  }
+
+  _registerOnLogin() {
+    this.client.on('ready', () => {
+      if (this.onLoginCallback) this.onLoginCallback();
+    });
+  }
+
+  _setup() {
+    this._registerOnMessage();
+    this._registerOnLogin();
+  }
 
   registerServer(serverId) {
     const serverIndex = this.serverWhitelist.indexOf(serverId);
@@ -61,30 +93,12 @@ class BotClient {
   };
 
   onLogin(callback) {
-    this.client.on('ready', () => {
-      callback();
-    });
-
+    this.onLoginCallback = callback;
     return this;
   };
 
   onMessage(callback) {
-    this.client.on('message', (message) => {
-      if (message.author.bot) {
-        return;
-      }
-
-      if (this.checkRegisterCommands(message)) {
-        return;
-      }
-
-      if (this.isRegisteredServer(message.guild.id)) {
-        this.commandRegistry.run(this, message);
-      };
-
-      callback(message);
-    });
-
+    this.onMessageCallback = callback;
     return this;
   }
 

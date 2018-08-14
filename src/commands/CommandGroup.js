@@ -24,9 +24,10 @@ class CommandGroup {
 
   registerCommand(command) {
     const hasCommand = this.commands.find(
-      (registeredCommand) => registeredCommand.name === command.name
+      (registeredCommand) => {
+        return registeredCommand.meta.name === command.meta.name;
+      }
     );
-
     if (hasCommand) {
       throw new Error(
         `Group '${this.name}' already has command ${command.meta.name}`
@@ -37,7 +38,7 @@ class CommandGroup {
     return this;
   };
 
-  findCommandFuzzy(query) {
+  _findCommandFuzzy(query) {
     return this.commands.find((command) => {
       const isPossibleCommand = fuzzy(
         query,
@@ -45,12 +46,7 @@ class CommandGroup {
         'meta.aliases',
       ).length;
 
-      if (isPossibleCommand) {
-        console.log('chosen:');
-        console.log(command);
-        return true;
-      }
-      return false;
+      return isPossibleCommand;
     });
   };
 

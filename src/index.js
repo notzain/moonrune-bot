@@ -9,16 +9,10 @@ const commandRegistry = new CommandRegistry()
     new MovienightGroup('!', ['mn'])
   );
 
-const bot = new BotClient('Tama', commandRegistry)
+const bot = new BotClient('Tama', commandRegistry);
+
+bot
   .onLogin(() => {
     console.log('Tama at your service!');
-  })
-  .onMessage((message) => {
-    /*
-    console.log('Commands:');
-    commandRegistry.commandGroups.forEach((group) => {
-      group.commands.forEach((command) => console.log(command));
-    });
-    */
   })
   .login(config.token);
