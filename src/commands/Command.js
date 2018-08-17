@@ -1,5 +1,5 @@
 class CommandMetadata {
-  constructor(name, aliases, usage, description) {
+  constructor({name, aliases, usage, description}) {
     this.name = name;
     this.aliases = aliases;
     this.usage = usage;
@@ -13,7 +13,7 @@ class Command {
   };
 
   async run(bot, message, args) {
-    throw new Error('Command::run is abstract');
+    throw new Error('Command::run is not implemented');
   }
 };
 

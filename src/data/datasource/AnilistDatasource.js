@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 
 const makeAnimeQuery = (properties) => {
-  const requestedResults = properties.results || 10;
+  const requestedResults = properties.results || 20;
 
   return `
   query($title: String) {

@@ -78,7 +78,7 @@ class BotClient {
     if (messageArray.includes('register')) {
       if (this.registerServer(serverId)) {
         message.channel.send(
-          'At your service, Gintoki-sama.'
+          `At your service, ${message.author.username}-sama.`
         );
         return true;
       }

@@ -2,7 +2,7 @@ class AnimeModel {
   constructor(
     {
       title,
-      titleRomaji,
+      titleEnglish,
       description,
       cover,
       mediaFormat,
@@ -16,7 +16,7 @@ class AnimeModel {
     }
   ) {
     this.title       = title;
-    this.titleRomaji = titleRomaji || this.title;
+    this.titleEnglish = titleEnglish || this.title;
 
     this.description = description;
     this.cover       = cover;
@@ -32,7 +32,7 @@ class AnimeModel {
 
     this.score       = score;
 
-    this.genres      = genres || [];
+    this.genres      = genres;
   }
 };
 

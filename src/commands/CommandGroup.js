@@ -51,7 +51,7 @@ class CommandGroup {
   };
 
   runCommand(bot, message, args) {
-    throw new Error('CommandGroup::runCommand is abstract');
+    throw new Error('CommandGroup::runCommand is not implemented.');
   };
 };
 

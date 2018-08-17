@@ -5,6 +5,10 @@ class AnimeResultModel {
     this.results = models;
   }
 
+  isEmpty() {
+    return !(this.results && this.results.length > 0);
+  }
+
   filterBy(property, value) {
     switch (property) {
       case 'startDate': {
@@ -48,6 +52,13 @@ class AnimeResultModel {
 
   sortBy(property, ascending = true) {
     switch (property) {
+      case 'name':
+      case 'title': {
+        this.results.sort(
+          (a, b) => compare.byString(a.title, b.title)
+        );
+      } break;
+
       case 'startDate': {
         this.results.sort(
           (a, b) => compare.byDate(a.startDate, b.startDate)

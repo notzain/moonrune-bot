@@ -14,7 +14,7 @@ class AnilistRepo extends AnimeRepo {
     const mappedResults = results.map((result) => {
       return new AnimeModel({
         title: result.title.romaji,
-        titleRomaji: result.title.romaji,
+        titleEnglish: result.title.english,
         description: result.description,
         cover: result.coverImage.large,
         mediaFormat: result.format,
