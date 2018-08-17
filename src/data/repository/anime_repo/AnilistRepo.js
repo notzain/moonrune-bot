@@ -1,18 +1,17 @@
-const AnimeRepo = require('../AnimeRepo');
-const AnimeModel = require('../../models/AnimeModel');
 const AnilistDatasource = require('../../datasource/AnilistDatasource');
+const AnimeModel        = require('../../models/AnimeModel');
+const AnimeRepo         = require('../AnimeRepo');
+const AnimeResultModel  = require('../../models/AnimeResultModel');
 
 class AnilistRepo extends AnimeRepo {
   constructor() {
     super();
-
-    this.results = [];
   }
 
   async findAnime(property) {
     const results = await AnilistDatasource.findAnime(property);
 
-    this.results = results.map((result) => {
+    const mappedResults = results.map((result) => {
       return new AnimeModel({
         title: result.title.romaji,
         titleRomaji: result.title.romaji,
@@ -37,11 +36,7 @@ class AnilistRepo extends AnimeRepo {
       });
     });
 
-    return this;
-  }
-
-  filterBy() {
-
+    return new AnimeResultModel(mappedResults);
   }
 };
 

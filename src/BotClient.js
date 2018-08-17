@@ -7,8 +7,8 @@ class BotClient {
     this.client = new DiscordJS.Client();
     this.serverWhitelist = [];
 
-    this.onMessageCallback = null;
-    this.onLoginCallback = null;
+    this._onMessageCallback = null;
+    this._onLoginCallback = null;
 
     this._setup();
   };
@@ -27,13 +27,13 @@ class BotClient {
         this.commandRegistry.run(this, message);
       };
 
-      if (this.onMessageCallback) this.onMessageCallback();
+      if (this._onMessageCallback) this._onMessageCallback(message);
     });
   }
 
   _registerOnLogin() {
     this.client.on('ready', () => {
-      if (this.onLoginCallback) this.onLoginCallback();
+      if (this._onLoginCallback) this._onLoginCallback();
     });
   }
 
@@ -93,12 +93,12 @@ class BotClient {
   };
 
   onLogin(callback) {
-    this.onLoginCallback = callback;
+    this._onLoginCallback = callback;
     return this;
   };
 
   onMessage(callback) {
-    this.onMessageCallback = callback;
+    this._onMessageCallback = callback;
     return this;
   }
 
